@@ -57,6 +57,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
     )
 
+
 def main():
     """
     main function
