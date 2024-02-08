@@ -13,9 +13,6 @@ def filter_datum(
     """
     Filter the message
     """
-    for field in fields:
-        message = re.sub(
-            rf"{field}=.*?{separator}",
-            rf"{field}={redaction}{separator}",
-            message)
-    return message
+    return re.sub(r"(\w+)=([a-zA-Z0-9@\.\-\(\)\ \:\^\<\>\~\$\%\@\?\!\/]*)",
+                  lambda match: match.group(1) + "=" + redaction
+                  if match.group(1) in fields else match.group(0), message)
