@@ -2,6 +2,9 @@
 """ BasicAuth module
 """
 from api.v1.auth.auth import Auth
+from typing import TypeVar
+from models.user import User
+import base64
 
 
 class BasicAuth(Auth):
@@ -28,7 +31,10 @@ class BasicAuth(Auth):
         if not isinstance(base64_authorization_header, str):
             return None
         try:
-            return base64_authorization_header.encode('utf-8').decode('utf-8')
+            base64_bytes = base64_authorization_header.encode('utf-8')
+            message_bytes = base64.b64decode(base64_bytes)
+            message = message_bytes.decode('utf-8')
+            return message
         except Exception:
             return None
 
@@ -53,6 +59,13 @@ class BasicAuth(Auth):
             return None
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
+        try:
+            users = User.search({'email': user_email})
+        except Exception:
+            return None
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ Current user
