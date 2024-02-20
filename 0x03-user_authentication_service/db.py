@@ -64,7 +64,7 @@ class DB:
         """Update User"""
         user = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if key not in self.DATA:
+            if key not in list(self.DATA):
                 raise ValueError
             setattr(user, key, val)
         self._session.commit()
