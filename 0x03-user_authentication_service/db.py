@@ -34,7 +34,7 @@ class DB:
         user_attributes = set()
         for column in User.__table__.columns:
             user_attributes.add(column.name)
-        return user_attributes
+        return list(user_attributes)
 
     @property
     def _session(self) -> Session:
