@@ -23,6 +23,16 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
+        # Get the attributes from the User model
+        self.DATA = self.get_user_attributes()
+
+    def get_user_attributes(self):
+        """Get User model attributes"""
+        user_attributes = set()
+        for column in User.__table__.columns:
+            user_attributes.add(column.name)
+        return user_attributes
+
     @property
     def _session(self) -> Session:
         """Memoized session object
@@ -49,3 +59,13 @@ class DB:
         if not user:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id, **kwargs):
+        """Update User"""
+        user = self.find_user_by(id=user_id)
+        for key, val in kwargs.items():
+            if key not in self.DATA:
+                raise ValueError
+            setattr(user, key, val)
+        self._session.commit()
+        return None
