@@ -7,11 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-
 from user import Base, User
-
-
-DATA = ['id', 'email', 'hashed_password', 'session_id', 'reset_token']
 
 
 class DB:
@@ -34,7 +30,7 @@ class DB:
         for column in User.__table__.columns:
             user_attributes.add(column.name)
         return user_attributes
-    
+
     @property
     def _session(self) -> Session:
         """Memoized session object
