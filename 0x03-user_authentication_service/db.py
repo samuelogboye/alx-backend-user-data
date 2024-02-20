@@ -26,8 +26,8 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
-        # Get the attributes from the User model
-        self.DATA = self.get_user_attributes()
+        # # Get the attributes from the User model
+        # self.DATA = self.get_user_attributes()
 
     def get_user_attributes(self):
         """Get User model attributes"""
@@ -67,7 +67,7 @@ class DB:
         """Update User"""
         user = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if key not in DATA:  # list(self.DATA):
+            if key not in self.get_user_attributes():  # list(self.DATA):
                 raise ValueError
             setattr(user, key, val)
         self._session.commit()
