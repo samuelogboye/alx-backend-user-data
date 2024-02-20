@@ -53,11 +53,11 @@ class DB:
             raise NoResultFound
         return user
 
-    def update_user(self, user_id, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Update User"""
         user = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if key not in DATA:  # list(self.DATA):
+            if key not in DATA:
                 raise ValueError
             setattr(user, key, val)
         self._session.commit()
