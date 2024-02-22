@@ -4,7 +4,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.session import Session
+# from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from user import Base, User
@@ -32,7 +32,7 @@ class DB:
         return user_attributes
 
     @property
-    def _session(self) -> Session:
+    def _session(self):
         """Memoized session object
         """
         if self.__session is None:
